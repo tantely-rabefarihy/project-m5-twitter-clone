@@ -1,18 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import { CurrentUserProvider } from './CurrentUserContext';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { CurrentUserProvider } from "./CurrentUserContext";
+import { FeedsDataProvider } from "./Contexts/FeedsDataContext";
+import { HandleToggleProvider } from "./Contexts/HandleToggleContext";
 
 ReactDOM.render(
-
   <React.StrictMode>
     <CurrentUserProvider>
-      <App />
+      <FeedsDataProvider>
+        <HandleToggleProvider>
+          <App />
+        </HandleToggleProvider>
+      </FeedsDataProvider>
     </CurrentUserProvider>
   </React.StrictMode>,
-  
-  document.getElementById('root')
+
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

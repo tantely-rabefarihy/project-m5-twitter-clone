@@ -1,5 +1,5 @@
-import React from "react";
-import {BrowserRouter, BrowserRouter as Route, Switch} from "react-router-dom";
+import React, { useContext } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Bookmarks from "./Bookmarks";
 import GlobalStyles from "./GlobalStyles";
 import HomeFeed from "./HomeFeed";
@@ -8,48 +8,41 @@ import Profile from "./Profile";
 import Sidebar from "./Sidebar";
 import TweetDetails from "./TweetDetails";
 import styled from "styled-components";
-
-
-
+import { CurrentUserContext } from "./CurrentUserContext";
 
 const App = () => {
-
+  const { currentUser, status } = useContext(CurrentUserContext);
 
   return (
     <BrowserRouter>
-    <GlobalStyles />
+      <GlobalStyles />
       <Wrapper>
-        <Sidebar/>
+        <Sidebar />
         {}
         <Switch>
           <Route exact path="/">
-            <HomeFeed/>
+            <HomeFeed />
           </Route>
-          <Route exact path="/notifications" >
+          <Route path="/notifications">
             <Notifications />
           </Route>
-          <Route exact path="/bookmarks">
-            <Bookmarks/>
+          <Route path="/bookmarks">
+            <Bookmarks />
           </Route>
-          <Route exact path="/tweet/:tweetId">
-            <TweetDetails/>
+          <Route path="/tweet/:tweetId">
+            <TweetDetails />
           </Route>
-          <Route exact path="/abc">
-            <Profile/>
+          <Route path="/:profileId">
+            <Profile />
           </Route>
         </Switch>
       </Wrapper>
-      
     </BrowserRouter>
-    
   );
-}
+};
 
-
-const Wrapper = styled.div `
-display:flex;
-`
-
-
+const Wrapper = styled.div`
+  display: flex;
+`;
 
 export default App;

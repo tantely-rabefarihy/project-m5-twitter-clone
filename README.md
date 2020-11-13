@@ -252,7 +252,7 @@ Your next steps are up to you. The rest of this document outlines specific neces
 
 There are two different Tweet components: a big one, used on the Tweet Details page, and a small one, to be used in different feeds.
 
-![Big tweet](./assetsscreenshots//big-tweet.png)
+![Big tweet](./assets/screenshots/big-tweet.png)
 ![Small tweet](./assets/screenshots/small-tweet.png)
 
 You'll notice that these tweets share some UI elements in common, whereas other are different. If you try to create a single `Tweet` component, it will get awfully complicated. Might be better to have two separate components, but to share reusable bits (eg. maybe a `TweetActions` component for the row of icons along the bottom, since it's identical in both versions).

@@ -1,39 +1,51 @@
-import React, {useContext, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 export const CurrentUserContext = React.createContext(null);
 
-export const CurrentUserProvider = ({children}) => {
+export const CurrentUserProvider = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [status, setStatus] = useState("loading");
 
-    const [currentUser, setCurrentUser] = useState(null);
-    const [status, setStatus] = useState("loading");
+  // Fetch the user data from the API (/me/profile)
 
+  useEffect(() => {
+    // fetch(``)
+    // .then((res) => res.json())
+    // .then((result) => {
+    //     console.log("DATA RESPONSE: ", result );
+    //     setCurrentUser(result);
+    // })
+    // ******
+    // fetch("/api/me/profile")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log("DATA: ", data);
+    //     setCurrentUser(data);
+    //     setStatus("idle");
+    //   });
+    // *******
 
-// Fetch the user data from the API (/me/profile)
-const fetchData = async () => {
-    try {
-        const response = await fetch("/api/me/profile");
-    const json = await response.json();
- // When the data is received, update currentUser.
-    setCurrentUser(json);
-    setStatus("idle")
-    } catch (error) {
-        console.log(error);
+    async function getUserData() {
+      let response = await fetch("/api/me/profile");
+      let data = await response.json();
+      return data;
     }
-    
+    getUserData().then((data) => {
+      setCurrentUser(data);
+      setStatus("idle");
+    });
+  }, []);
 
-} 
+  //
 
- 
-  // Also, set `status` to `idle`
-
-
-
-    return (
-        <CurrentUserContext.Provider 
-        value={{currentUser, status}}
-        >
-            {children}
-        </CurrentUserContext.Provider>
-    )
-}
-
+  return (
+    <CurrentUserContext.Provider
+      value={{
+        currentUser,
+        status,
+      }}
+    >
+      {children}
+    </CurrentUserContext.Provider>
+  );
+};
