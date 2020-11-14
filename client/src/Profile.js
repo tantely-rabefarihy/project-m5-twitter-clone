@@ -3,14 +3,17 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { SpecificUserContext } from "./Contexts/SpecificUserContext";
 import { CurrentUserContext } from "./CurrentUserContext";
+import { COLORS } from "./constants";
+import { FiMapPin, FiCalendar } from "react-icons/fi";
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
+import { format } from "date-fns";
+import { parseISO } from "date-fns";
 
 const Profile = ({ currentUser, status }) => {
   const { profileId } = useParams();
   console.log("PROFILEID: ", profileId);
 
   //   NOW' , i just need to do a fetch and retrieve the data and use the state to display the profile wanted.
-
-  // console.log("USER INFO : ", UserInfo);
 
   // const handle = UserInfo?.User?.profile;
   const [userInfo, setUserInfo] = useState();
@@ -24,51 +27,63 @@ const Profile = ({ currentUser, status }) => {
     }
 
     getUserData(profileId).then((data) => {
-      setUserInfo(data.profile);
+      const getDate = (t) => {
+        let date = parseISO(t);
+        return format(date, "MMMM yyyy");
+      };
+      const dateJoined = getDate(data.profile.joined);
+
+      setUserInfo({ ...data.profile, dateJoined });
       setPageStatus("idle");
-      // setCurrentFeed(Object.values(data));
-      // setTweetsOrder(Object.values(data));
     });
   }, []);
 
   console.log("USER FEED", userInfo);
 
-  // const {
-  // //   avatarSrc,
-  //   bannerSrc,
-  // //   bio,
-  // //   displayName,
-  // //   handle,
-  // //   isBeingfollowedByYou,
-  // //   isFollowingYou,
-  // //   joined,
-  // //   numFollowers,
-  // //   numFollowing,
-  // //   numLikes,
-  // } = userInfo ;
+  //   GET THE DATE OF POSTING
 
+  console.log("FOLLOWING YOU : ", userInfo?.isBeingFollowedByYou);
   return (
     <Wrapper>
       <Images>
         <Banner src={userInfo?.bannerSrc} />
         <Avatar src={userInfo?.avatarSrc} />
+        {userInfo?.isBeingFollowedByYou ? (
+          <FollowBtn>Following</FollowBtn>
+        ) : (
+          <FollowBtn>Follow</FollowBtn>
+        )}
       </Images>
-      {userInfo?.isBeingfollowedByYou ? (
-        <button>Following</button>
-      ) : (
-        <button>Follow</button>
-      )}
+
       <InfoContainer>
-        <div>{userInfo?.displayName}</div>
-        <div>{userInfo?.handle}</div>
-        {userInfo?.isFollowingYou ? <span>Follows you</span> : null}
-        <div>{userInfo?.currentUser}</div>
+        <Name>{userInfo?.displayName}</Name>
+        <HandleContainer>
+          <UserName>@{userInfo?.handle}</UserName>
+          {userInfo?.isFollowingYou ? <FollowMe>Follows you</FollowMe> : null}
+        </HandleContainer>
         <div>{userInfo?.bio}</div>
-        {userInfo?.location ? <div>{userInfo?.location}</div> : null}
-        <div>{userInfo?.joined}</div>
-        <div>{userInfo?.numFollowing}</div>
-        <div>{userInfo?.numFollowers}</div>
+        <LocationDate>
+          {userInfo?.location ? (
+            <div>
+              <FiMapPin color="grey" style={{ marginRight: "5px" }} />
+              {userInfo?.location}
+            </div>
+          ) : null}
+          <FiCalendar style={{ margin: " 0 5px" }} /> Joined
+          {userInfo?.dateJoined}
+          {}
+        </LocationDate>
+        <NumFollow>
+          <div>{userInfo?.numFollowing} Following</div>
+          <div>{userInfo?.numFollowers} Followers</div>
+        </NumFollow>
       </InfoContainer>
+
+      <Tabs>
+        <button>Tweets</button>
+        <button>Media</button>
+        <button>Likes</button>
+      </Tabs>
     </Wrapper>
   );
 };
@@ -80,26 +95,108 @@ const Wrapper = styled.div`
 `;
 
 const Images = styled.div`
-  margin-bottom: 20px;
+  height: 400px;
+  position: relative;
 `;
 
 const Banner = styled.img`
   width: 100%;
   height: 300px;
-  position: relative;
 `;
 
 const Avatar = styled.img`
   border: 5px solid white;
   border-radius: 50%;
-  height: 180px;
-  width: 180px;
+  height: 10rem;
+  width: 10rem;
   position: absolute;
-  top: calc(100% / 3);
-  left: 20%;
+  top: 55%;
+  left: 2%;
 `;
 
-const InfoContainer = styled.div`
-  margin-top: 20px;
+const FollowBtn = styled.div`
+  align-content: center;
+  text-align: center;
+  border-radius: 25px;
+  font-size: 18px;
+  font-weight: bolder;
+  padding: 10px;
+  width: 150px;
+  height: 50px;
+  background-color: ${COLORS.primary};
+  color: white;
+  position: absolute;
+  top: 80%;
+  right: 5%;
+  margin-top: 10px;
+  display: inline-grid;
+`;
+
+const Name = styled.div`
+  font-size: 16px;
+  font-weight: bolder;
+  margin-bottom: 5px;
+`;
+
+const HandleContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: auto;
+  margin-bottom: 10px;
+`;
+
+const UserName = styled.div`
+  font-size: 14px;
+  margin-right: 5px;
+`;
+
+const FollowMe = styled.div`
+  font-size: 12px;
+  color: grey;
+  border-radius: 10px;
+  background-color: whitesmoke;
+  width: 70px;
+  padding: 3px;
+`;
+
+const InfoContainer = styled.div``;
+
+const LocationDate = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 12px;
+  color: grey;
+
+  justify-items: space-between;
+  margin: 10px 0;
+`;
+
+const NumFollow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+`;
+
+const Tabs = styled.div`
+  margin: 40px auto 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  button {
+    width: 100%;
+    color: grey;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    font-weight: bolder;
+    outline: none;
+    padding-bottom: 10px;
+
+    &:focus {
+      border-bottom: 3px solid ${COLORS.primary};
+      color: ${COLORS.primary};
+    }
+  }
 `;
 export default Profile;

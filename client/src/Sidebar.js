@@ -64,6 +64,7 @@ const LinkWrapper = styled.div`
 
 const NavigationLink = styled(NavLink)`
   text-decoration: none;
+  color: black;
   display: flex;
   margin-left: 15px;
   font-family: ${themeVars.contentFont};
