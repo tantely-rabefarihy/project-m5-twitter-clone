@@ -26,7 +26,6 @@ export const FeedsDataProvider = ({ children }) => {
   const sortedData = currentFeed?.sort((a, b) => {
     return tweetsOrder.indexOf(a.id) - tweetsOrder.indexOf(b.id);
   });
-  console.log("Sorted DATA: ", sortedData);
 
   const toggleLikeTweet = (tweetId) => {
     // .map over orderedData

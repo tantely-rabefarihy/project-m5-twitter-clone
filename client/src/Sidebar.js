@@ -71,7 +71,7 @@ const NavigationLink = styled(NavLink)`
   font-size: 18px;
   font-weight: bolder;
 
-  &.active {
+  &.active:focus {
     color: ${COLORS.primary};
   }
 `;

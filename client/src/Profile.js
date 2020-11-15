@@ -8,6 +8,7 @@ import { FiMapPin, FiCalendar } from "react-icons/fi";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import { format } from "date-fns";
 import { parseISO } from "date-fns";
+import Tweet from "./Tweet";
 
 const Profile = ({ currentUser, status }) => {
   const { profileId } = useParams();
@@ -17,32 +18,43 @@ const Profile = ({ currentUser, status }) => {
 
   // const handle = UserInfo?.User?.profile;
   const [userInfo, setUserInfo] = useState();
+  const [userFeeds, setUserFeeds] = useState();
+  const [tweetsOrder, setTweetsOrder] = useState();
   const [pageStatus, setPageStatus] = useState("loading");
 
   useEffect(() => {
     async function getUserData(userHandle) {
       let response = await fetch(`/api/${userHandle}/profile`);
+      let feedResponse = await fetch(`/api/${userHandle}/feed`);
       let data = await response.json();
-      return data;
+      let profileFeed = await feedResponse.json();
+      return { data, profileFeed };
     }
 
     getUserData(profileId).then((data) => {
+      // DATE OF POSTING
       const getDate = (t) => {
         let date = parseISO(t);
         return format(date, "MMMM yyyy");
       };
-      const dateJoined = getDate(data.profile.joined);
+      const dateJoined = getDate(data.data.profile.joined);
+      // ****************
 
-      setUserInfo({ ...data.profile, dateJoined });
+      // DEFINING THE STATES
+      setUserInfo({ ...data.data.profile, dateJoined });
+      setUserFeeds(Object.values(data.profileFeed.tweetsById));
+      setTweetsOrder(data.profileFeed.tweetsIds);
       setPageStatus("idle");
+      // ************
     });
   }, []);
 
-  console.log("USER FEED", userInfo);
+  // SORTING THE USER's TWEETS
+  const sortedUserTweets = userFeeds?.sort((a, b) => {
+    return tweetsOrder?.indexOf(a.id) - tweetsOrder?.indexOf(b.id);
+  });
+  console.log("sortedUserTweets: ", sortedUserTweets);
 
-  //   GET THE DATE OF POSTING
-
-  console.log("FOLLOWING YOU : ", userInfo?.isBeingFollowedByYou);
   return (
     <Wrapper>
       <Images>
@@ -84,6 +96,28 @@ const Profile = ({ currentUser, status }) => {
         <button>Media</button>
         <button>Likes</button>
       </Tabs>
+
+      <FeedsArea>
+        {sortedUserTweets !== undefined
+          ? sortedUserTweets?.map((singleTweet, index) => {
+              return (
+                <Tweet
+                  key={index}
+                  id={singleTweet.id}
+                  authorData={singleTweet.author}
+                  status={singleTweet.status}
+                  time={singleTweet.timestamp}
+                  //   isLiked={singleTweet.isLiked}
+                  isRetweeted={singleTweet.isRetweeted}
+                  //   numLikes={singleTweet.numLikes}
+                  numRetweets={singleTweet.numRetweets}
+                  retweetFrom={singleTweet.retweetFrom}
+                  media={singleTweet.media}
+                />
+              );
+            })
+          : "LOADING..."}
+      </FeedsArea>
     </Wrapper>
   );
 };
@@ -199,4 +233,9 @@ const Tabs = styled.div`
     }
   }
 `;
+
+const FeedsArea = styled.div`
+  width: 100%;
+`;
+
 export default Profile;

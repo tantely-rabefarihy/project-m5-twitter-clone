@@ -4,7 +4,7 @@ import { FeedsDataContext } from "../Contexts/FeedsDataContext";
 import { Stats } from "./Stats";
 import Header from "./Header";
 import ActionBar from "./ActionBar";
-// import { TweetContext } from "../TweetContext";
+import { useHistory } from "react-router-dom";
 
 const Tweet = ({
   status,
@@ -15,17 +15,24 @@ const Tweet = ({
   isRetweeted,
   authorData,
   media,
+  id,
 }) => {
   //   console.log("MEDIA: ", media[0].url);
+
+  //  Redirecting user to the tweet they clicked
+  let history = useHistory();
+  const handleRedirection = (tweetId) => {
+    history.push(`/tweet/${tweetId}`);
+  };
 
   const tweetMedia = media[0]?.url ?? "";
   return (
     <Wrapper>
       <Header authorData={authorData} time={time} />
-      <TweetContents>{status}</TweetContents>
-      {tweetMedia ? <MediaPost src={tweetMedia} /> : <></>}
-      <Divider />
-      <Divider />
+      <Details onClick={() => handleRedirection(id)}>
+        <TweetContents>{status}</TweetContents>
+        {tweetMedia ? <MediaPost src={tweetMedia} /> : <></>}
+      </Details>
       <ActionBar isLiked={isLiked} isRetweeted={isRetweeted} />
       <Divider />
     </Wrapper>
@@ -36,8 +43,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   background: white;
-  width: 580px;
-  padding: 16px;
+  padding: 10px;
+  width: 90%;
   text-align: left;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Ubuntu, "Helvetica Neue", sans-serif;
@@ -52,6 +59,15 @@ const MediaPost = styled.img`
   border-radius: 10px;
   width: auto;
   height: 350px;
+`;
+const Details = styled.div`
+  margin-top: -30px;
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  align-self: left;
+  padding-left: 60px;
+  cursor: pointer;
 `;
 
 const Divider = styled.div`

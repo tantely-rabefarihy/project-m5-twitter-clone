@@ -35,13 +35,10 @@ const Header = ({ authorData, time }) => {
 
 const Wrapper = styled.header`
   display: flex;
-  position: relative;
   cursor: pointer;
 `;
 
 const Avatar = styled.img`
-  position: absolute;
-  left: -55px;
   width: 48px;
   height: 48px;
   border-radius: 50%;
@@ -50,6 +47,7 @@ const Avatar = styled.img`
 const Name = styled.div`
   display: flex;
   flex-direction: row;
+  margin-left: 10px;
   width: 300px;
   justify-items: space-between;
 `;
