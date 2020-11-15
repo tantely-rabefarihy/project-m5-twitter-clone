@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { FaRegFontAwesomeLogoFull } from "react-icons/fa";
 
 export const FeedsDataContext = React.createContext(null);
 
@@ -27,7 +28,7 @@ export const FeedsDataProvider = ({ children }) => {
     return tweetsOrder.indexOf(a.id) - tweetsOrder.indexOf(b.id);
   });
 
-  const toggleLikeTweet = (tweetId) => {
+  const toggleLikeTweet = async (tweetId) => {
     // .map over orderedData
     // if (tweet.id ==== tweetId) toggle isLiked
 
@@ -41,8 +42,20 @@ export const FeedsDataProvider = ({ children }) => {
 
       return tweet;
     });
+    setCurrentFeed(dataWithLikes);
 
-    setOrderedData(dataWithLikes);
+    const raw = await fetch(`/api/tweet/${tweetId}/like`, {
+      method: "PUT",
+      headers: {
+        Accept: "Apploication/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        like: true || false,
+      }),
+    });
+
+    const json = await raw.json();
   };
 
   return (
@@ -50,7 +63,7 @@ export const FeedsDataProvider = ({ children }) => {
       value={{
         sortedData,
         orderedData,
-        // toggleLikeTweet: toggleLikeTweet,
+        toggleLikeTweet: toggleLikeTweet,
       }}
     >
       {children}

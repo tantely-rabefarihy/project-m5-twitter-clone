@@ -8,16 +8,7 @@ import LikeButton from "../LikeButton";
 import Action from "./Action";
 import TweetActionIcon from "./TweetActionIcon";
 
-const ActionBar = ({ isLiked }) => {
-  const {
-    handleToggleLike,
-
-    isRetweeted,
-    handleToggleRetweet,
-    numOfLikes,
-    numOfRetweets,
-  } = useContext(HandleToggleContext);
-
+const ActionBar = ({ id, isLiked, onLikeClick, numLikes }) => {
   return (
     <Wrapper>
       <Action color="black" size={20}>
@@ -27,9 +18,9 @@ const ActionBar = ({ isLiked }) => {
       <Action color="rgb(23, 191, 99)" size={20}>
         <AiOutlineRetweet style={{ width: "20px", height: "20px" }} />
       </Action>
-      <div>{numOfRetweets}</div>
+      {/* <div>{numOfRetweets}</div> */}
       <Action
-        onClick={() => handleToggleLike()}
+        onClick={() => onLikeClick({ isLiked, id })}
         color="rgb(224, 36, 94)"
         size={20}
       >
@@ -41,7 +32,7 @@ const ActionBar = ({ isLiked }) => {
           }}
         />
       </Action>
-      <div>{numOfLikes}</div>
+      <div>{numLikes}</div>
       <Action color="rgb(27, 149, 224)" size={20}>
         <FiShare style={{ width: "20px", height: "20px" }} />
       </Action>
@@ -52,7 +43,7 @@ const ActionBar = ({ isLiked }) => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   height: 50px;
   width: auto;
 `;
