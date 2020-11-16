@@ -6,39 +6,58 @@ import { ReactComponent as Logo } from "./assets/logo.svg";
 import { FiHome, FiUser, FiBell, FiBookmark } from "react-icons/fi";
 import { themeVars } from "./GlobalStyles";
 import { CurrentUserContext } from "./CurrentUserContext";
+import { useHistory } from "react-router-dom";
+import { Loading } from "./LoadingPage";
 
 const Sidebar = () => {
   const userInfo = useContext(CurrentUserContext);
-  // console.log("USER INFO : ", userInfo);
-
   const handle = userInfo?.currentUser?.profile?.handle;
+  let history = useHistory();
 
-  // console.log(handle);
+  // const handleKeyPress = (event) => {
+  //   if (event.key === "Enter") {
+  //     history.push(`/${pageName}`);
+  //   }
+  // };
 
   return (
-    <Wrapper>
-      <Logo style={{ width: "50px", height: "50px", marginLeft: "12px" }} />
-      <LinkWrapper>
-        <FiHome style={{ width: "20px", height: "20px" }} />
-        <NavigationLink to="/">Home</NavigationLink>
-      </LinkWrapper>
-      <LinkWrapper>
-        <FiUser style={{ width: "20px", height: "20px" }} />
-        {handle ? (
-          <NavigationLink to={`/${handle}`}>Profile</NavigationLink>
-        ) : (
-          "LOADING"
-        )}
-      </LinkWrapper>
-      <LinkWrapper>
-        <FiBell style={{ width: "20px", height: "20px" }} />
-        <NavigationLink to="/notifications">Notifications</NavigationLink>
-      </LinkWrapper>
-      <LinkWrapper>
-        <FiBookmark style={{ width: "20px", height: "20px" }} />
-        <NavigationLink to="/bookmarks">Bookmarks</NavigationLink>
-      </LinkWrapper>
-    </Wrapper>
+    <>
+      {userInfo ? (
+        <Wrapper>
+          <Logo style={{ width: "50px", height: "50px", marginLeft: "12px" }} />
+          <LinkWrapper tabIndex="0">
+            <FiHome style={{ width: "20px", height: "20px" }} />
+            <NavigationLink tabIndex="-1" to="/">
+              Home
+            </NavigationLink>
+          </LinkWrapper>
+          <LinkWrapper tabIndex="0">
+            <FiUser style={{ width: "20px", height: "20px" }} />
+            {/* {handle ? ( */}
+            <NavigationLink tabIndex="-1" to={`/${handle}`}>
+              Profile
+            </NavigationLink>
+            {/* // ) : ( */}
+
+            {/* // )} */}
+          </LinkWrapper>
+          <LinkWrapper tabIndex="0">
+            <FiBell style={{ width: "20px", height: "20px" }} />
+            <NavigationLink tabIndex="-1" to="/notifications">
+              Notifications
+            </NavigationLink>
+          </LinkWrapper>
+          <LinkWrapper tabIndex="0">
+            <FiBookmark style={{ width: "20px", height: "20px" }} />
+            <NavigationLink tabIndex="-1" to="/bookmarks">
+              Bookmarks
+            </NavigationLink>
+          </LinkWrapper>
+        </Wrapper>
+      ) : (
+        <Loading />
+      )}
+    </>
   );
 };
 

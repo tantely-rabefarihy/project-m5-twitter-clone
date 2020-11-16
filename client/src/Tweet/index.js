@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FeedsDataContext } from "../Contexts/FeedsDataContext";
-import { Stats } from "./Stats";
 import Header from "./Header";
 import ActionBar from "./ActionBar";
 import { useHistory } from "react-router-dom";
@@ -21,6 +20,8 @@ const Tweet = ({
 }) => {
   const [optimisticLike, setOptimisticLike] = useState(isLiked);
   const [optimisticNumLikes, setOptimisticNumLikes] = useState(numLikes);
+  const [errorStatus, setErrorStatus] = useState("");
+
   //  Redirecting user to the tweet they clicked
   let history = useHistory();
   const handleRedirection = (tweetId) => {
@@ -35,20 +36,24 @@ const Tweet = ({
     setOptimisticNumLikes(optimisticNumLikes + incOrDec);
     setOptimisticLike(!isLiked);
 
-    await fetch(`/api/tweet/${id}/like`, {
-      method: "PUT",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        like: !isLiked,
-      }),
-    });
+    try {
+      await fetch(`/api/tweet/${id}/like`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          like: !isLiked,
+        }),
+      });
+    } catch (err) {
+      setErrorStatus(err);
+    }
   };
 
   return (
-    <Wrapper>
+    <Wrapper tabIndex="0">
       {retweetFrom?.displayName ? (
         <Retweet>
           <AiOutlineRetweet
@@ -63,7 +68,7 @@ const Tweet = ({
         <></>
       )}
       <Header authorData={authorData} time={time} />
-      <Details onClick={() => handleRedirection(id)}>
+      <Details tabIndex="-1" onClick={() => handleRedirection(id)}>
         <TweetContents>{status}</TweetContents>
         {tweetMedia ? <MediaPost src={tweetMedia} /> : <></>}
       </Details>
@@ -85,7 +90,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   background: white;
   padding: 10px;
-  width: 90%;
+  width: 80%;
   text-align: left;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Ubuntu, "Helvetica Neue", sans-serif;

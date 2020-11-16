@@ -23,7 +23,7 @@ const Header = ({ authorData, time }) => {
   return (
     <Wrapper onClick={() => handleRedirection(handle)}>
       <Avatar src={avatarSrc} />
-      <Name>
+      <Name tabIndex="0">
         <DisplayName>{displayName}</DisplayName>
         <Username>@{handle}</Username>
         <span>&#183;</span>

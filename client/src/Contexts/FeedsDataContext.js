@@ -8,19 +8,24 @@ export const FeedsDataProvider = ({ children }) => {
   const [tweetsOrder, setTweetsOrder] = useState([]);
   const [orderedData, setOrderedData] = useState();
   const [pageStatus, setPageStatus] = useState("loading");
+  const [errorStatus, setErrorStatus] = useState(false);
 
   useEffect(() => {
-    async function getFeedData() {
-      let response = await fetch("/api/me/home-feed");
-      let data = await response.json();
-      return data;
-    }
+    try {
+      async function getFeedData() {
+        let response = await fetch("/api/me/home-feed");
+        let data = await response.json();
+        return data;
+      }
 
-    getFeedData().then((data) => {
-      setCurrentFeed(Object.values(data.tweetsById));
-      setTweetsOrder(Object.values(data.tweetIds));
-      setPageStatus("idle");
-    });
+      getFeedData().then((data) => {
+        setCurrentFeed(Object.values(data.tweetsById));
+        setTweetsOrder(Object.values(data.tweetIds));
+        setPageStatus("idle");
+      });
+    } catch (err) {
+      setErrorStatus(true);
+    }
   }, [currentFeed]);
 
   // SORTING THE FEEDS DATA ARRAY
@@ -64,6 +69,7 @@ export const FeedsDataProvider = ({ children }) => {
         sortedData,
         orderedData,
         toggleLikeTweet: toggleLikeTweet,
+        errorStatus,
       }}
     >
       {children}
