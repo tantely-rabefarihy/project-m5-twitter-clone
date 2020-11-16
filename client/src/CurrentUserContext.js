@@ -9,22 +9,6 @@ export const CurrentUserProvider = ({ children }) => {
   // Fetch the user data from the API (/me/profile)
 
   useEffect(() => {
-    // fetch(``)
-    // .then((res) => res.json())
-    // .then((result) => {
-    //     console.log("DATA RESPONSE: ", result );
-    //     setCurrentUser(result);
-    // })
-    // ******
-    // fetch("/api/me/profile")
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log("DATA: ", data);
-    //     setCurrentUser(data);
-    //     setStatus("idle");
-    //   });
-    // *******
-
     async function getUserData() {
       let response = await fetch("/api/me/profile");
       let data = await response.json();

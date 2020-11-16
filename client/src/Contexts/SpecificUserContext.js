@@ -4,8 +4,6 @@ export const SpecificUserContext = React.createContext(null);
 
 export const SpecificUserProvider = ({ children }) => {
   const [userFeed, setUserFeed] = useState();
-  // const [tweetsOrder, setTweetsOrder] = useState([]);
-  // const [orderedData, setOrderedData] = useState();
   const [pageStatus, setPageStatus] = useState("loading");
 
   useEffect(() => {
@@ -17,10 +15,6 @@ export const SpecificUserProvider = ({ children }) => {
 
     getUserData().then((data) => {
       setUserFeed(data);
-
-      // setCurrentFeed(Object.values(data));
-      // setTweetsOrder(Object.values(data));
-      // setPageStatus("idle");
     });
   }, []);
 

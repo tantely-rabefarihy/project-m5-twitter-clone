@@ -53,35 +53,37 @@ const Tweet = ({
   };
 
   return (
-    <Wrapper tabIndex="0">
-      {retweetFrom?.displayName ? (
-        <Retweet>
-          <AiOutlineRetweet
-            style={{
-              marginRight: "10px",
-            }}
-          />
-          {retweetFrom?.displayName}
-          Remeowed
-        </Retweet>
-      ) : (
-        <></>
-      )}
-      <Header authorData={authorData} time={time} />
-      <Details tabIndex="-1" onClick={() => handleRedirection(id)}>
-        <TweetContents>{status}</TweetContents>
-        {tweetMedia ? <MediaPost src={tweetMedia} /> : <></>}
-      </Details>
-      <ActionBar
-        isLiked={optimisticLike}
-        isRetweeted={isRetweeted}
-        onLikeClick={onLikeClick}
-        id={id}
-        numLikes={optimisticNumLikes}
-      />
+    <>
+      <Wrapper tabIndex="0">
+        {retweetFrom?.displayName ? (
+          <Retweet>
+            <AiOutlineRetweet
+              style={{
+                marginRight: "10px",
+              }}
+            />
+            {retweetFrom?.displayName}
+            Remeowed
+          </Retweet>
+        ) : (
+          <></>
+        )}
+        <Header authorData={authorData} time={time} />
+        <Details tabIndex="-1" onClick={() => handleRedirection(id)}>
+          <TweetContents>{status}</TweetContents>
+          {tweetMedia ? <MediaPost src={tweetMedia} /> : <></>}
+        </Details>
+        <ActionBar
+          isLiked={optimisticLike}
+          isRetweeted={isRetweeted}
+          onLikeClick={onLikeClick}
+          id={id}
+          numLikes={optimisticNumLikes}
+        />
 
-      <Divider />
-    </Wrapper>
+        <Divider />
+      </Wrapper>
+    </>
   );
 };
 
