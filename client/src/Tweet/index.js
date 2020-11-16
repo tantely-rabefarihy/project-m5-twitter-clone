@@ -5,6 +5,7 @@ import { Stats } from "./Stats";
 import Header from "./Header";
 import ActionBar from "./ActionBar";
 import { useHistory } from "react-router-dom";
+import { AiOutlineRetweet } from "react-icons/ai";
 
 const Tweet = ({
   status,
@@ -16,6 +17,7 @@ const Tweet = ({
   isRetweeted,
   isLiked,
   numLikes,
+  retweetFrom,
 }) => {
   const [optimisticLike, setOptimisticLike] = useState(isLiked);
   const [optimisticNumLikes, setOptimisticNumLikes] = useState(numLikes);
@@ -47,6 +49,19 @@ const Tweet = ({
 
   return (
     <Wrapper>
+      {retweetFrom?.displayName ? (
+        <Retweet>
+          <AiOutlineRetweet
+            style={{
+              marginRight: "10px",
+            }}
+          />
+          {retweetFrom?.displayName}
+          Remeowed
+        </Retweet>
+      ) : (
+        <></>
+      )}
       <Header authorData={authorData} time={time} />
       <Details onClick={() => handleRedirection(id)}>
         <TweetContents>{status}</TweetContents>
@@ -76,6 +91,16 @@ const Wrapper = styled.div`
     Ubuntu, "Helvetica Neue", sans-serif;
 `;
 
+const Retweet = styled.div`
+  font-size: 15px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 20px;
+  color: rgb(101, 119, 134);
+  margin: 5px 0 10px 30px;
+  width: fit-content;
+  line-height: 1;
+`;
 const TweetContents = styled.div`
   font-size: 16px;
   padding: 16px 0;

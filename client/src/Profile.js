@@ -57,6 +57,11 @@ const Profile = ({ currentUser, status }) => {
 
   return (
     <Wrapper>
+      {/* {sortedUserTweets[0].retweetFrom?.displayName ? (
+        <div>{sortedUserTweets[0]?.retweetFrom?.displayName}</div>
+      ) : (
+        <></>
+      )} */}
       <Images>
         <Banner src={userInfo?.bannerSrc} />
         <Avatar src={userInfo?.avatarSrc} />

@@ -21,7 +21,7 @@ export const FeedsDataProvider = ({ children }) => {
       setTweetsOrder(Object.values(data.tweetIds));
       setPageStatus("idle");
     });
-  }, []);
+  }, [currentFeed]);
 
   // SORTING THE FEEDS DATA ARRAY
   const sortedData = currentFeed?.sort((a, b) => {

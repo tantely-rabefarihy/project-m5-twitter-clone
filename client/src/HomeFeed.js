@@ -2,17 +2,17 @@ import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import Tweet from "./Tweet/index";
 import { FeedsDataContext } from "./Contexts/FeedsDataContext";
-
+import Meow from "./Meow";
 const HomeFeed = () => {
   const { sortedData, toggleLikeTweet } = useContext(FeedsDataContext);
 
   return (
     <Wrapper>
       <Home>Home</Home>
+      <Meow />
       <FeedsArea>
         {sortedData !== undefined
           ? sortedData?.map((singleTweet) => {
-              console.log("IS IT LIKED: ", singleTweet.isLiked);
               return (
                 <Tweet
                   key={singleTweet.id}
@@ -36,7 +36,7 @@ const HomeFeed = () => {
 };
 
 const Wrapper = styled.div`
-  width: 80%;
+  width: 100%;
 `;
 
 const Home = styled.div`
@@ -44,6 +44,7 @@ const Home = styled.div`
   font-weight: bolder;
   border-bottom: 2px solid rgb(230, 236, 240);
   height: 50px;
+  width: 580px;
 `;
 
 const FeedsArea = styled.div`
