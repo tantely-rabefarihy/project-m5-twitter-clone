@@ -4,10 +4,15 @@ import { CurrentUserContext } from "./CurrentUserContext";
 import { COLORS } from "./constants";
 import { useInput } from "./custom Hooks/useInput";
 
+const maxChars = 280;
+
 const Meow = () => {
   const { currentUser } = useContext(CurrentUserContext);
-  const { reset } = useInput("");
   const [statusData, setStatusData] = useState("");
+  const [charCount, setCharCount] = useState({ charLeft: maxChars });
+  const [disableBtn, setDisableBtn] = useState(false);
+  const [CountColor, setCountColor] = useState("");
+
   const handleMeow = async (ev) => {
     ev.preventDefault();
 
@@ -22,22 +27,50 @@ const Meow = () => {
     await setStatusData("");
   };
 
+  //   Handling character count and color changes
+
+  const handleCount = (event) => {
+    let textInput = event.target.value;
+    setCharCount({ charLeft: maxChars - textInput.length });
+  };
+
+  useEffect(() => {
+    if (charCount.charLeft <= 55 && charCount.charLeft > 0) {
+      setCountColor("orange");
+      setDisableBtn(false);
+    } else if (charCount.charLeft <= 0) {
+      setCountColor("red");
+      setDisableBtn(true);
+    } else {
+      setCountColor("");
+      setDisableBtn(false);
+    }
+  }, [charCount]);
+
   return (
     <Wrapper onSubmit={handleMeow}>
       <Container>
         <UserAvatar src={currentUser?.profile?.avatarSrc} />
         <Input
           type="text"
-          //   {...bind}
           value={statusData}
           placeholder="Want to meow something?"
           onChange={(e) => {
             setStatusData(e.target.value);
+            handleCount(e);
           }}
         />
       </Container>
+      <Footer>
+        <Count style={{ color: `${CountColor}` }}>{charCount.charLeft}</Count>
+        <MeowBtn
+          type="submit"
+          value="Meow"
+          disabled={disableBtn}
+          style={!disableBtn ? { opacity: 1 } : { opacity: 0.5 }}
+        />
+      </Footer>
 
-      <MeowBtn type="submit" value="Meow" />
       <Divider />
     </Wrapper>
   );
@@ -92,6 +125,17 @@ const MeowBtn = styled.input`
   padding: 0 20px;
 `;
 
+const Count = styled.div`
+  align-self: center;
+  margin-right: 5px;
+  color: grey;
+  font-size: 16px;
+`;
+const Footer = styled.div`
+  display: flex;
+  width: fit-content;
+  align-self: flex-end;
+`;
 const Divider = styled.div`
   margin-top: 10px;
   border: 4px solid lightgrey;
