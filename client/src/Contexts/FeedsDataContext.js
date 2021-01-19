@@ -13,8 +13,8 @@ export const FeedsDataProvider = ({ children }) => {
   useEffect(() => {
     try {
       async function getFeedData() {
-        let response = await fetch("/api/me/home-feed");
-        let data = await response.json();
+        const response = await fetch("/api/me/home-feed");
+        const data = await response.json();
         return data;
       }
 
@@ -52,7 +52,7 @@ export const FeedsDataProvider = ({ children }) => {
     const raw = await fetch(`/api/tweet/${tweetId}/like`, {
       method: "PUT",
       headers: {
-        Accept: "Apploication/json",
+        Accept: "Application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({

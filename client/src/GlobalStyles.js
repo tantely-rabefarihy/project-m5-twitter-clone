@@ -1,18 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 
 export const themeVars = {
-    // cadmiumRed: "#D80026",
-    // alabamaCrimson: "#AA001E",
-    // selectiveYellow: "#FDBB01",
-    // orange: "#F79D00",
-    // desertSand: "#E3C4A6",
-    // pagePadding: "24px",
-    headingFont: "'Permanent Marker', Arial, Helvetica, sans-serif",
-    contentFont: "Arial, Helvetica, sans-serif",
-    // background: "#F79D00",
-  };
-  
-  export default createGlobalStyle`
+  headingFont: "'Permanent Marker', Arial, Helvetica, sans-serif",
+  contentFont: "Arial, Helvetica, sans-serif",
+};
+
+export default createGlobalStyle`
     *,
     *:before,
     *:after {
@@ -101,4 +94,3 @@ export const themeVars = {
       padding: 0 12px;
     }
   `;
-  

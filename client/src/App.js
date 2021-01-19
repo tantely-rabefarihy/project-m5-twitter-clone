@@ -8,10 +8,10 @@ import Profile from "./Profile";
 import Sidebar from "./Sidebar";
 import TweetDetails from "./TweetDetails";
 import styled from "styled-components";
-import { CurrentUserContext } from "./CurrentUserContext";
+// import { CurrentUserContext } from "./CurrentUserContext";
 
 const App = () => {
-  const { currentUser, status } = useContext(CurrentUserContext);
+  // const { currentUser, status } = useContext(CurrentUserContext);
 
   return (
     <BrowserRouter>

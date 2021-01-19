@@ -26,7 +26,9 @@ const Profile = ({ currentUser, status }) => {
     async function getUserData(userHandle) {
       let response = await fetch(`/api/${userHandle}/profile`);
       let feedResponse = await fetch(`/api/${userHandle}/feed`);
+      console.log({ response });
       let data = await response.json();
+      console.log({ data });
       let profileFeed = await feedResponse.json();
       return { data, profileFeed };
     }

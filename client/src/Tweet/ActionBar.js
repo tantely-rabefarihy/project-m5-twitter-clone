@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import { HandleToggleContext } from "../Contexts/HandleToggleContext";
 import { FiHeart, FiShare } from "react-icons/fi";

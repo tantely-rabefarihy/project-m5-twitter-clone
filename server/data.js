@@ -29,8 +29,9 @@ const users = {
   giantcat9: {
     handle: "giantcat9",
     displayName: "Giant Military Cats",
-    avatarSrc:
-      "https://pbs.twimg.com/profile_images/1203323662591504384/GwxdsfNA_400x400.jpg",
+    avatarSrc: "/assets/giantcat9-profile.jpg",
+
+    // "https://pbs.twimg.com/profile_images/1203323662591504384/GwxdsfNA_400x400.jpg"
     bannerSrc:
       "https://pbs.twimg.com/profile_banners/1168513974763171840/1604095267/1500x500",
     location: undefined,
@@ -63,7 +64,7 @@ const tweets = {
     likedBy: [],
     retweetedBy: [],
     status:
-      "Ok people #backtowork you go. Cats...just carry on lounging around as usual.",
+      "Ok people #backtowork you go. 🐈 Cats...just carry on lounging around as usual.",
     media: [
       {
         type: "img",
@@ -138,7 +139,7 @@ Special wishes to all my diplomats, far from home at this time of year, serving 
     retweetedBy: [],
     status: `2019 has a been a wonderful year, but I definitely deserve some rest!
 
-I would love to know what my 🇬🇧diplomats have been getting up to! What’s been your highlight or biggest achievement of the year?
+I would love to know what my 🇬🇧 diplomats have been getting up to! What’s been your highlight or biggest achievement of the year?
 
 My highlight has been coming back to work with my very own Palmy HQ 🤩`,
     media: [
@@ -146,14 +147,14 @@ My highlight has been coming back to work with my very own Palmy HQ 🤩`,
         type: "img",
         url: "/assets/ENH2rRrWwAARmsZ.jpeg",
       },
-      // {
-      //   type: 'img',
-      //   url: '/assets/ENH2rTvWwAYTqQW.jpeg',
-      // },
-      // {
-      //   type: 'img',
-      //   url: '/assets/ENH2rYeXYAEAIk7.jpeg',
-      // },
+      {
+        type: "img",
+        url: "/assets/ENH2rTvWwAYTqQW.jpeg",
+      },
+      {
+        type: "img",
+        url: "/assets/ENH2rYeXYAEAIk7.jpeg",
+      },
     ],
   },
   // Giant Military Cats
