@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Bookmarks from "./Bookmarks";
 import GlobalStyles from "./GlobalStyles";

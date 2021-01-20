@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";
-import { FaRegFontAwesomeLogoFull } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+// import { FaRegFontAwesomeLogoFull } from "react-icons/fa";
 
 export const FeedsDataContext = React.createContext(null);
 
 export const FeedsDataProvider = ({ children }) => {
   const [currentFeed, setCurrentFeed] = useState();
   const [tweetsOrder, setTweetsOrder] = useState([]);
-  const [orderedData, setOrderedData] = useState();
+  // const [orderedData, setOrderedData] = useState();
   const [pageStatus, setPageStatus] = useState("loading");
   const [errorStatus, setErrorStatus] = useState(false);
 
@@ -67,7 +67,7 @@ export const FeedsDataProvider = ({ children }) => {
     <FeedsDataContext.Provider
       value={{
         sortedData,
-        orderedData,
+        // orderedData,
         toggleLikeTweet: toggleLikeTweet,
         errorStatus,
       }}
