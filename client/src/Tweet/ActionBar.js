@@ -8,6 +8,7 @@ import LikeButton from "../LikeButton";
 import Action from "./Action";
 
 const ActionBar = ({ id, isLiked, onLikeClick, numLikes }) => {
+  console.log({ id, isLiked });
   return (
     <Wrapper>
       <Action color="black" size={20}>

@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import ActionBar from "./Tweet/ActionBar";
+
 const TweetDetails = () => {
   const { tweetId } = useParams();
-
   const [tweetInfo, setTweetInfo] = useState();
 
   useEffect(() => {
